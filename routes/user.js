@@ -17,8 +17,6 @@ const router =  express.Router();
  *   post:
  *     summary: Signup a new user
  *     tags: [Auth]
- *     security:
- *       - jwt: []
  *     requestBody:
  *       required: true
  *       content:
@@ -35,6 +33,9 @@ const router =  express.Router();
  *               password:
  *                 type: string
  *                 description: User's password
+ *               phone:
+ *                 type: string
+ *                 description: User's phone number
  *     responses:
  *       200:
  *         description: User created successfully
@@ -53,8 +54,6 @@ router.post('/signup', userController.signUp);
  *   post:
  *     summary: Login with an existing user account
  *     tags: [Auth]
- *     security:
- *       - jwt: []
  *     requestBody:
  *       required: true
  *       content:

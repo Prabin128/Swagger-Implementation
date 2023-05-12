@@ -35,7 +35,15 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      stock:{
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      rate:{
+        allowNull: false,
+        type: Sequelize.FLOAT
+      },
     });
   },
   async down(queryInterface, Sequelize) {

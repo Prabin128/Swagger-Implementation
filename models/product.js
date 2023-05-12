@@ -11,7 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Product.belongsTo(models.userId, {
+        as : "user",
+        foreignKey : "userId"
+      });
+      Product.hasMany(models.product_stock,{as:"product_stock",foreignKey:"product_id"})
     }
   }
   Product.init({
@@ -20,16 +24,13 @@ module.exports = (sequelize, DataTypes) => {
     images: DataTypes.STRING,
     specification: DataTypes.STRING,
     ratings: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    stock: DataTypes.INTEGER,
+    rate:DataTypes.FLOAT,
   }, {
     sequelize,
     modelName: 'Product',
   });
-  Product.associate = function (models){
-    Product.belongsTo(models.userId, {
-      as : "user",
-      foreignKey : "userId"
-    })
-  }
+  
   return Product;
 };

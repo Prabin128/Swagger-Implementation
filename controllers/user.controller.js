@@ -16,7 +16,8 @@ function signUp(req,res){
                         const user ={
                             name : req.body.name,
                             email : req.body.email,
-                            password : hash
+                            password : hash,
+                            phone:req.body.phone
                         }
         
                         models.User.create(user).then(result =>{
@@ -59,13 +60,13 @@ function login(req,res){
                         userId : user.id
                     }, process.env.JWT_KEY, function(err, token){
                         res.status(200).json({
-                            message : "Authentication succesfull!!",
+                            message : "Login succesfull!!",
                             token : token
                         });
                     });
                 }else{
-                    res.status(500).json({
-                        message : "Something went wrong!!"
+                    res.status(401).json({
+                        message : "Invalid credentials!!"
                     });
                 }
             });

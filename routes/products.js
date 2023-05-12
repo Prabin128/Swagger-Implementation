@@ -23,6 +23,7 @@ module.exports = router;   */
 const express = require('express');
 const productController = require('../controllers/products.controller');
 const checkAuthMiddleware = require('../middleware/check-auth');
+const upload = require("../middleware/imageUpload");
 
 
 const router = express.Router();
@@ -48,6 +49,8 @@ const router = express.Router();
  *            - specification 
  *            - ratings
  *            - userId
+ *            - rate
+ *            - stock
  *          properties:
  *            title:
  *              type: string
@@ -56,7 +59,7 @@ const router = express.Router();
  *              type: text
  *              description: description of Product
  *            images:
- *              type: string
+ *              type: file
  *              description: Image description
  *            specification:
  *              type: string
@@ -67,6 +70,12 @@ const router = express.Router();
  *            userId:
  *              type: integer
  *              description: the userId
+ *            rate:
+ *              type: float
+ *              description: rate of product
+ *            stock:
+ *              type: integer
+ *              description: stock of product
  */
 
 
@@ -81,7 +90,7 @@ const router = express.Router();
  *     requestBody:
  *        required: true
  *        content:
- *           application/json:
+ *           multipart/form-data:
  *               schema:
  *                  $ref: '#/components/schemas/Products'
  *     responses:
@@ -90,7 +99,9 @@ const router = express.Router();
  *          '500':
  *               description: Internal Server Error
  */
-router.post("/", checkAuthMiddleware.checkAuth, productController.createProduct);
+router.post("/", checkAuthMiddleware.checkAuth,upload.fields([
+    { name: "images" },
+  ]), productController.createProduct);
 
 
 /**
