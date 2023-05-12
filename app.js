@@ -2,8 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const swaggerjsdoc =  require("swagger-jsdoc");
 const swaggerui = require("swagger-ui-express");
+const morgan = require("morgan");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
+app.use(morgan("dev"));
+app.use("/uploads/images/", express.static("uploads/images"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 
@@ -11,7 +18,7 @@ const productRoute = require('./routes/products');
 const userIdRoute = require('./routes/userId');
 const userRoute =  require('./routes/user');
 
-app.use(bodyParser.json());
+
 
         //Swagger implementation
 const options = {
@@ -41,7 +48,7 @@ const options = {
     apis : ["./routes/*.js"],
 };
 const spacs = swaggerjsdoc(options)
-app.use('/api-docs',
+app.use('/doc',
         swaggerui.serve, 
         swaggerui.setup(spacs));
 

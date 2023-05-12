@@ -3,13 +3,21 @@ const Validator = require('fastest-validator');
 
 
 function createProduct(req, res) {
+    if (req.files.images) {
+        var images =
+          
+          "/uploads/images/" +
+          req.files.images[0].filename;
+      }
     const product = {
         title : req.body.title,
         description :req.body.description,
-        images : req.body.images,
+        images : images,
         specification : req.body.specification,
         ratings : req.body.ratings,
-        userId : 1
+        userId : req.body.userId,
+        rate : req.body.rate,
+        stock : req.body.stock
     }
 
 // const schema ={
@@ -34,7 +42,7 @@ models.Product.create(product).then(result => {
     });
 }).catch(error => {
     res.status(500).json({
-        message: "Something went wring",
+        message: "Something went wrong",
         error : error
     });
 });
